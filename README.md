@@ -1,50 +1,72 @@
-# Gruvbox theme for sway windows manager
+# 🍐 GRUSSIA - Gruvbox theme from Russia
 
-<table>
-  <tr>
-    <td colspan="2"><img src="screenshots/homescreen.png" /></td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/neofetch.png" /></td>
-    <td><img src="screenshots/wofi.png" /></td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/htop_mc.png" /></td>
-    <td><img src="screenshots/neovim.png" /></td>
-  </tr>
-</table>
+![Screenshot](screenshot.png)
 
 ## Quick start
 
-- Copy all folders (except `mc` and `nvim`) to `~/.config`.
+>[!note]
+>Configuration was tested on ALT Linux Regular MATE.
 
-- Setup skin for midnight commander:
-  
-  ```
-  mkdir -p ~/.local/share/mc
-  cp mc ~/.local/share
-  ```
 
-- Clone NvChad config for neovim:
-  
-  ```
-  git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
-  ```
+#### Removing useless soft
 
-- Enable battery notifier service:
-  
-  ```
-  systemctl --user enable ~/.config/systemd/user/battery-notifier.service --now
-  ```
+```shell
+# Go away from TTY1
+# Press CTRL+ALT+F2
 
-- If necessary edit `.bash_profile`.
+su -
 
-- Copy `.tmux.conf` to user's root directory.
+apt-get remove --purge xorg-*
+apt-get remove --purge mate-*
+apt-get remove --purge lightdm-*
 
-## License
+# Optional
+apt-get remove --purge gparted
+apt-get remove --purge cpu-z
+apt-get remove --purge mpv
+apt-get remove --purge nano
+apt-get remove --purge vim-common
+apt-get remove --purge altmediawriter
+```
 
-MIT
+#### Installing windows manager with deps
 
-## Author
 
-[Kuat Kurpenov](https://github.com/kurpenok "Kuat Kurpenov") (Telegram/VK: @kurpenok)
+```shell
+apt-get update
+
+apt-get install gcc
+apt-get install ripgrep
+apt-get install node npm
+
+apt-get install flatpak
+
+apt-get install alacritty neovim tmux
+apt-get install hyrpland hyprland-qtutils hyprcursor hyprpaper hypridle hyprlock hyprshot xdg-desktop-portal-hyprland waybar
+
+apt-get install fonts-ttf-fira-code fonts-ttf-fira-code-nerd
+```
+
+#### Copy configs
+
+```shell
+# Bash profile
+cp configs/.bash_profile /home/$USER/
+
+# Alacritty
+mkdir -p ~/.config/alacritty/themes
+git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+cp configs/alacritty/ ~/.config/alacritty/
+
+# Hyprland
+cp configs/hypr/ ~/.config/
+
+# Neovim
+git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
+# Copy manually from configs/nvim
+
+# TPM & Tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+cp configs/.tmux.conf /home/$USER/
+# Press in tmux prefix+I to install
+```
